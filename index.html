@@ -36,7 +36,7 @@
         #my-video {
             width: 80%;
             max-width: 700px;
-            border: 3px solid #61dafb;
+            border: none; /* Çerçeve rengi kaldırıldı */
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             margin-bottom: 20px;
@@ -46,7 +46,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(0, 0, 0, 0.8); /* Kontrol çubuğu arka planı siyah */
+            background: rgba(0, 0, 0, 0.8);
             border-radius: 15px;
             padding: 10px;
             margin-top: 10px;
@@ -93,7 +93,7 @@
             border-radius: 10px;
             font-size: 1.2rem;
             color: #61dafb;
-            display: none; /* Başlangıçta gizli */
+            display: none;
         }
 
         .channel-container {
@@ -168,15 +168,14 @@
             }
         }
 
-        /* Tam ekran modunda ışıkları gizle */
         :fullscreen {
-            background: black; /* Tam ekran arka plan rengi */
-            color: #fff; /* Yazı rengi beyaz */
+            background: black;
+            color: #fff;
         }
 
         :fullscreen #my-video {
             border: none; /* Tam ekran modunda kenarlık kaldır */
-            box-shadow: none; /* Tam ekran modunda gölge kaldır */
+            box-shadow: none;
         }
     </style>
 </head>
@@ -189,7 +188,7 @@
     <div class="video-controls">
         <button class="control-button" id="play-pause" onclick="togglePlay()">▶️</button>
         <button class="control-button" id="mute" onclick="toggleMute()">🔊</button>
-        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🌐</button> <!-- Daha iyi bir emoji -->
+        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🌐</button>
         <input type="range" id="volume" min="0" max="1" step="0.1" value="1" onchange="setVolume(this.value)" />
     </div>
 
