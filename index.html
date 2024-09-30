@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mehmet12ws</title>
+    <title>mehmet12ws - Canlı Maçlar</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS stil kuralları buraya eklenebilir. */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f9f9f9;
@@ -28,6 +27,9 @@
             cursor: pointer;
             background-color: #fff;
             transition: background-color 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .channel-item:hover {
             background-color: #f0f0f0;
@@ -47,6 +49,16 @@
         }
         .control-button {
             margin: 0 5px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .control-button:hover {
+            background-color: #0056b3;
         }
         .telegram-link {
             display: block;
@@ -60,12 +72,18 @@
             text-align: center;
             margin: 10px 0;
         }
+        video {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <h1>mehmet12ws</h1>
+    <h1>mehmet12ws - Canlı Maçlar</h1>
     
-    <video id="my-video" controls style="width: 100%; max-width: 600px;"></video>
+    <video id="my-video" controls></video>
     <div class="in-video-telegram" id="in-video-telegram" style="text-align: center; margin: 10px 0;">📱 t.me/MehmetSports</div>
     
     <div class="video-controls">
@@ -82,7 +100,7 @@
         <ul class="channel-list" id="match-list"></ul>
     </div>
 
-    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
+    <div class="counter">Toplam Ziyaretçi: <span id="visit-count">0</span></div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
