@@ -1,6 +1,5 @@
 <?php
-// Şifrelenmiş URL'leri tanımlayın
-$channels = [
+$matches = [
     [
         'name' => 'Beşiktaş',
         'url' => 'aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=',
@@ -56,3 +55,7 @@ $channels = [
         'date' => '7/24'
     ]
 ];
+
+header('Content-Type: application/json');
+echo json_encode($matches);
+?>
