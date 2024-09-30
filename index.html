@@ -178,7 +178,10 @@
 <body>
     <h1>mehmet12ws</h1>
     
-    <video id="my-video" controls playsinline></video>
+    <video id="my-video" controls playsinline>
+        <source id="video-source" src="" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+    </video>
     <div class="in-video-telegram" id="in-video-telegram">📱 t.me/MehmetSports</div>
     
     <div class="video-controls">
@@ -203,7 +206,7 @@
 
     <div class="flex-row">
         <div class="sub-channel-container">
-            <h2>BeinSports </h2>
+            <h2>BeinSports</h2>
             <ul class="channel-list">
                 <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
                     <span class="status">CANLI</span>
@@ -261,6 +264,7 @@
         const video = document.getElementById('my-video');
         const inVideoTelegram = document.getElementById('in-video-telegram');
         const visitorCount = document.getElementById('visitor-count');
+        const videoSource = document.getElementById('video-source');
 
         let isPlaying = false;
         let isMuted = false;
@@ -286,7 +290,8 @@
         }
 
         function changeChannel(url) {
-            video.src = url;
+            videoSource.src = url;
+            video.load();
             video.play();
             inVideoTelegram.style.display = 'block'; // Kanal değiştiğinde göster
         }
