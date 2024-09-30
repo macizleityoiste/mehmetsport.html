@@ -98,17 +98,17 @@
 
         .channel-container {
             display: flex;
-            flex-direction: column; /* Dikey hizalama */
-            align-items: center; /* Ortala */
-            justify-content: center; /* Dikey merkezleme */
-            margin-top: 40px; /* Üstte biraz boşluk ver */
-            height: auto; /* Yüksekliği tamamen kapla */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 40px;
+            height: auto;
         }
 
         .channel-list {
             padding: 0;
             list-style: none;
-            text-align: center; /* İçeriği ortala */
+            text-align: center;
         }
 
         .channel-item {
@@ -139,7 +139,7 @@
         }
 
         .sub-channel-container {
-            margin: 0 20px; /* Sağ ve sol boşluk */
+            margin: 0 20px;
         }
 
         @media (max-width: 768px) {
@@ -164,8 +164,19 @@
             }
 
             .flex-row {
-                flex-direction: column; /* Dikey dizilim */
+                flex-direction: column;
             }
+        }
+
+        /* Tam ekran modunda ışıkları gizle */
+        :fullscreen {
+            background: black; /* Tam ekran arka plan rengi */
+            color: #fff; /* Yazı rengi beyaz */
+        }
+
+        :fullscreen #my-video {
+            border: none; /* Tam ekran modunda kenarlık kaldır */
+            box-shadow: none; /* Tam ekran modunda gölge kaldır */
         }
     </style>
 </head>
@@ -178,7 +189,7 @@
     <div class="video-controls">
         <button class="control-button" id="play-pause" onclick="togglePlay()">▶️</button>
         <button class="control-button" id="mute" onclick="toggleMute()">🔊</button>
-        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🗖</button>
+        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🌐</button> <!-- Daha iyi bir emoji -->
         <input type="range" id="volume" min="0" max="1" step="0.1" value="1" onchange="setVolume(this.value)" />
     </div>
 
