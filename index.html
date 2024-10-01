@@ -3,69 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MehmetSport Video Player</title>
+    <title>MehmetSport Canlı Yayın</title>
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
             padding: 20px;
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #343a40;
         }
-        #my-video {
+        #video-player {
             width: 100%;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             display: block;
             background-color: #000;
         }
         .video-controls {
             display: flex;
             justify-content: center;
-            align-items: center;
             margin-top: 10px;
         }
         .control-button {
-            background-color: #333;
+            padding: 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            background-color: #343a40;
             color: #fff;
             border: none;
-            padding: 10px;
             font-size: 18px;
-            margin: 5px;
-            cursor: pointer;
         }
         .control-button:hover {
-            background-color: #555;
+            background-color: #495057;
         }
-        #volume {
+        #volume-control {
             width: 150px;
             margin-left: 10px;
-        }
-        .channel-container {
-            margin-top: 20px;
-            text-align: center;
         }
         .channel-list {
             list-style: none;
             padding: 0;
+            text-align: center;
         }
         .channel-item {
+            padding: 15px;
+            margin: 10px 0;
             background-color: #fff;
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
             border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s;
         }
         .channel-item:hover {
-            background-color: #e0e0e0;
+            background-color: #e9ecef;
         }
         .status {
-            color: green;
             font-weight: bold;
+            color: #28a745;
         }
         .telegram-link {
             display: block;
@@ -78,102 +74,81 @@
             text-decoration: underline;
         }
         .counter {
-            margin-top: 30px;
             text-align: center;
-        }
-        #in-video-telegram {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 5px;
-            border-radius: 5px;
-            display: none;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
-    <h1>MehmetSport Video Player</h1>
+    <h1>MehmetSport Canlı Yayın</h1>
     
     <!-- Video Oynatıcı -->
-    <video id="my-video" controls></video>
-    <div class="in-video-telegram" id="in-video-telegram">📱 t.me/MehmetSports</div>
-    
+    <video id="video-player" controls></video>
+
     <!-- Video Kontrolleri -->
     <div class="video-controls">
         <button class="control-button" id="play-pause" onclick="togglePlay()">▶️</button>
         <button class="control-button" id="mute" onclick="toggleMute()">🔊</button>
-        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🌐</button>
-        <input type="range" id="volume" min="0" max="1" step="0.1" value="1" onchange="setVolume(this.value)" />
+        <input type="range" id="volume-control" min="0" max="1" step="0.1" value="1" onchange="setVolume(this.value)" />
     </div>
 
-    <!-- Günün Maçı Listesi -->
-    <div class="channel-container">
-        <h2>Günün Maçı</h2>
-        <ul class="channel-list" id="channel-list"></ul> <!-- PHP linkleri buraya eklenecek -->
-    </div>
+    <!-- Kanal Listesi -->
+    <h2>Kanal Seçenekleri</h2>
+    <ul class="channel-list" id="channel-list"></ul>
 
     <!-- Telegram Linki -->
     <a href="https://t.me/MehmetSports" class="telegram-link" target="_blank">📱 Güncel Link İçin Telegramımıza Katılın</a>
 
     <!-- Ziyaretçi Sayısı -->
-    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span></div>
+    <div class="counter">Toplam Ziyaretçi: <span id="visit-count">0</span></div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // PHP'den gelen linkleri çek
+        const video = document.getElementById('video-player');
+        const playPauseBtn = document.getElementById('play-pause');
+        let hls;
+
+        // Maç linklerini çek
         fetch('mac.php')
             .then(response => response.json())
             .then(data => {
                 const channelList = document.getElementById('channel-list');
-                data.forEach(link => {
+                data.forEach(match => {
                     const listItem = document.createElement('li');
                     listItem.classList.add('channel-item');
                     listItem.innerHTML = `
-                        <span class="status">${link.status}</span>
-                        <span class="channel-name">${link.name}</span>
-                        <span class="date">${link.date}</span>
+                        <span class="status">${match.status}</span> - 
+                        <span class="channel-name">${match.name}</span> (${match.date})
                     `;
-                    listItem.onclick = function() {
-                        changeChannel(link.url); // Gerçek URL kullanılıyor
-                    };
+                    listItem.onclick = () => changeChannel(match.url);
                     channelList.appendChild(listItem);
                 });
             });
 
-        const video = document.getElementById('my-video');
-        const playPauseBtn = document.getElementById('play-pause');
-        const muteBtn = document.getElementById('mute');
-        const fullscreenBtn = document.getElementById('fullscreen');
-        const inVideoTelegram = document.getElementById('in-video-telegram');
-
-        let hls;
-
-        function changeChannel(src) {
+        // Kanal değiştir ve video oynat
+        function changeChannel(url) {
             if (hls) {
                 hls.destroy();
             }
 
             if (Hls.isSupported()) {
                 hls = new Hls();
-                hls.loadSource(src);
+                hls.loadSource(url);
                 hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
                     video.play();
                     playPauseBtn.innerHTML = '⏸️';
-                    inVideoTelegram.style.display = 'block';
                 });
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = src;
-                video.addEventListener('loadedmetadata', function () {
+                video.src = url;
+                video.addEventListener('loadedmetadata', () => {
                     video.play();
                     playPauseBtn.innerHTML = '⏸️';
-                    inVideoTelegram.style.display = 'block';
                 });
             }
         }
 
+        // Oynat/Duraklat butonu
         function togglePlay() {
             if (video.paused) {
                 video.play();
@@ -184,24 +159,21 @@
             }
         }
 
+        // Sesi aç/kapat butonu
         function toggleMute() {
             video.muted = !video.muted;
-            muteBtn.innerHTML = video.muted ? '🔇' : '🔊';
         }
 
+        // Ses seviyesi ayarla
         function setVolume(value) {
             video.volume = value;
         }
 
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                video.requestFullscreen().catch(err => {
-                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        }
+        // Ziyaretçi sayaç
+        let visitCount = localStorage.getItem('visit-count') || 0;
+        visitCount++;
+        localStorage.setItem('visit-count', visitCount);
+        document.getElementById('visit-count').innerText = visitCount;
     </script>
 </body>
 </html>
