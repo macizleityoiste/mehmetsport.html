@@ -36,7 +36,7 @@
         #my-video {
             width: 80%;
             max-width: 700px;
-            border: none; /* Çerçeve rengi kaldırıldı */
+            border: none;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             margin-bottom: 20px;
@@ -174,7 +174,7 @@
         }
 
         :fullscreen #my-video {
-            border: none; /* Tam ekran modunda kenarlık kaldır */
+            border: none;
             box-shadow: none;
         }
     </style>
@@ -197,9 +197,9 @@
     <div class="channel-container">
         <h2>Günün Maçı</h2>
         <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzA2OTEzMTY2ZWY3ZjQ4YzE5YmY=')">
+            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
                 <span class="status">CANLI</span>
-                <span class="channel-name">Tabii</span>
+                <span class="channel-name">Beşiktaş</span>
                 <span class="date">90 Dakika</span>
             </li>
         </ul>
@@ -226,62 +226,26 @@
                 </li>
                 <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM2OTQ2NjI0NzU2NTVmZmNiYTZiNDc=')">
                     <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports 2 - Yedek Yayın 1</span>
+                    <span class="channel-name">BeinSports1 - Yedek Yayın 4</span>
                     <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM0MTAxNjc1NjBmZDdiMmY0ZjQ2YmI=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports 3 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE2MTk1MzQ2M2VhMWU4YmFmYmFkY2E=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports 4 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="sub-channel-container">
-            <h2>S-Sport</h2>
-            <ul class="channel-list">
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzkzNjkwODI3NDlmNmE4NmY4NTBjMQ==')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">S-Sport - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzkzNjkwODI3NDlmNmE4NmY4NTBjMQ==')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">S-Sport 2 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>                
                 </li>
             </ul>
         </div>
     </div>
 
-    <div class="channel-container">
-        <div>
-
-    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
+    <div class="counter" id="counter">Toplam İzleyici: <span id="viewer-count">0</span></div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Ziyaret sayısını almak için counter.php'yi çağır
-        fetch('counter.php')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('visit-count').innerText = data;
-            });
-
-        const video = document.getElementById('my-video');
-        const playPauseBtn = document.getElementById('play-pause');
-        const muteBtn = document.getElementById('mute');
-        const fullscreenBtn = document.getElementById('fullscreen');
-        const inVideoTelegram = document.getElementById('in-video-telegram');
-
+        let video = document.getElementById('my-video');
         let hls;
+        let playPauseBtn = document.getElementById('play-pause');
+        let volumeSlider = document.getElementById('volume');
+        let viewerCount = 0;
 
         function changeChannel(src) {
+            const streamSource = "https://macizleityoiste.github.io/yayın.m3u8";
+
             if (hls) {
                 hls.destroy();
             }
@@ -295,16 +259,18 @@
                 hls.on(Hls.Events.MANIFEST_PARSED, function () {
                     video.play();
                     playPauseBtn.innerHTML = '⏸️';
-                    inVideoTelegram.style.display = 'block';
+                    document.getElementById('in-video-telegram').style.display = 'block';
                     video.currentTime = video.duration - 1;
+                    console.log(streamSource);
                 });
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = src;
                 video.addEventListener('loadedmetadata', function () {
                     video.play();
                     playPauseBtn.innerHTML = '⏸️';
-                    inVideoTelegram.style.display = 'block';
+                    document.getElementById('in-video-telegram').style.display = 'block';
                     video.currentTime = video.duration - 1;
+                    console.log(streamSource);
                 });
             }
         }
@@ -321,7 +287,6 @@
 
         function toggleMute() {
             video.muted = !video.muted;
-            muteBtn.innerHTML = video.muted ? '🔇' : '🔊';
         }
 
         function setVolume(value) {
@@ -329,23 +294,21 @@
         }
 
         function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                video.requestFullscreen().catch(err => {
-                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
-                });
-            } else {
-                document.exitFullscreen();
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
             }
         }
 
-        // Tam ekran modunda ışıkları gizle
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement) {
-                document.body.style.background = 'black'; // Tam ekran arka plan rengi
-            } else {
-                document.body.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1))'; // Normal arka plan rengi
-            }
-        });
+        // İzleyici sayısını artırma örneği
+        setInterval(() => {
+            viewerCount++;
+            document.getElementById('viewer-count').innerText = viewerCount;
+        }, 10000); // 10 saniyede bir artır
+
     </script>
 </body>
 </html>
