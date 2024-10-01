@@ -132,15 +132,16 @@
             color: #61dafb;
         }
 
-        .flex-row {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
+.flex-row {
+    display: flex;
+    justify-content: space-between; /* Eşit boşluk bırakır */
+    width: 100%; /* Tüm alanı kaplar */
+}
 
-        .sub-channel-container {
-            margin: 0 20px;
-        }
+.sub-channel-container {
+    width: 30%; /* Her bir kanal için genişlik belirleyin */
+}
+
 
         @media (max-width: 768px) {
             h1 {
