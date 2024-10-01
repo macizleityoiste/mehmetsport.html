@@ -6,177 +6,7 @@
     <title>mehmet12ws</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1));
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            height: 100vh;
-            text-align: center;
-            overflow: auto;
-            padding: 20px;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            text-shadow: 0 0 20px #61dafb;
-        }
-
-        h2 {
-            font-size: 2rem;
-            margin: 20px 0;
-            text-shadow: 0 0 15px #61dafb;
-        }
-
-        #my-video {
-            width: 80%;
-            max-width: 700px;
-            border: none; /* Çerçeve rengi kaldırıldı */
-            border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
-            margin-bottom: 20px;
-        }
-
-        .video-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 15px;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        .control-button {
-            background: none;
-            border: none;
-            color: #61dafb;
-            font-size: 1.5rem;
-            margin: 0 15px;
-            cursor: pointer;
-            transition: color 0.3s, transform 0.3s;
-        }
-
-        .control-button:hover {
-            color: #fff;
-            transform: scale(1.1);
-        }
-
-        .telegram-link {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 1.5rem;
-            color: #61dafb;
-            text-decoration: none;
-            transition: color 0.3s;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .telegram-link:hover {
-            color: #fff;
-        }
-
-        .in-video-telegram {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 1.2rem;
-            color: #61dafb;
-            display: none;
-        }
-
-        .channel-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 40px;
-            height: auto;
-        }
-
-        .channel-list {
-            padding: 0;
-            list-style: none;
-            text-align: center;
-        }
-
-        .channel-item {
-            cursor: pointer;
-            margin: 15px 0;
-            padding: 20px;
-            border: 3px solid #61dafb;
-            border-radius: 15px;
-            background-color: rgba(97, 218, 251, 0.2);
-            transition: background-color 0.3s, transform 0.3s;
-        }
-
-        .channel-item:hover {
-            background-color: rgba(97, 218, 251, 0.4);
-            transform: translateY(-3px);
-        }
-
-        .counter {
-            margin-top: 20px;
-            font-size: 1.2rem;
-            color: #61dafb;
-        }
-
-        .flex-row {
-            display: flex;
-            justify-content: center;
-            width: 100%;
-        }
-
-        .sub-channel-container {
-            margin: 0 20px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-            }
-
-            #my-video {
-                width: 90%;
-            }
-
-            .telegram-link {
-                font-size: 1.2rem;
-            }
-
-            .in-video-telegram {
-                font-size: 1rem;
-            }
-
-            .flex-row {
-                flex-direction: column;
-            }
-        }
-
-        :fullscreen {
-            background: black;
-            color: #fff;
-        }
-
-        :fullscreen #my-video {
-            border: none; /* Tam ekran modunda kenarlık kaldır */
-            box-shadow: none;
-        }
+        /* Mevcut stil kurallarınız burada... */
     </style>
 </head>
 <body>
@@ -196,81 +26,31 @@
 
     <div class="channel-container">
         <h2>Günün Maçı</h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">Beşiktaş</span>
-                <span class="date">90 Dakika</span>
-            </li>
-        </ul>
+        <ul class="channel-list" id="channel-list"></ul> <!-- PHP linkleri buraya eklenecek -->
     </div>
-
-    <div class="flex-row">
-        <div class="sub-channel-container">
-            <h2>BeinSports </h2>
-            <ul class="channel-list">
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports1 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzIxMTM0NjIzOTg0M2RkZWRlOGZhYmM=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports1 - Yedek Yayın 2</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI0MDM0MjUwMzE4NzNhNDMwMGQxZTQ=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports1 - Yedek Yayın 3</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM2OTQ2NjI0NzU2NTVmZmNiYTZiNDc=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports 2 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM0MTAxNjc1NjBmZDdiMmY0ZjQ2YmI=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports 3 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE2MTk1MzQ2M2VhMWU4YmFmYmFkY2E=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">BeinSports 4 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="sub-channel-container">
-            <h2>S-Sport</h2>
-            <ul class="channel-list">
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzkzNjkwODI3NDlmNmE4NmY4NTBjMQ==')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">S-Sport - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzkzNjkwODI3NDlmNmE4NmY4NTBjMQ==')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">S-Sport 2 - Yedek Yayın 1</span>
-                    <span class="date">7/24</span>                
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="channel-container">
-        <div>
 
     <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Ziyaret sayısını almak için counter.php'yi çağır
-        fetch('counter.php')
-            .then(response => response.text())
+        // PHP'den gelen linkleri çek
+        fetch('mac.php')
+            .then(response => response.json())
             .then(data => {
-                document.getElementById('visit-count').innerText = data;
+                const channelList = document.getElementById('channel-list');
+                data.forEach(link => {
+                    const listItem = document.createElement('li');
+                    listItem.classList.add('channel-item');
+                    listItem.innerHTML = `
+                        <span class="status">${link.status}</span>
+                        <span class="channel-name">${link.name}</span>
+                        <span class="date">${link.date}</span>
+                    `;
+                    listItem.onclick = function() {
+                        changeChannel(link.url); // Gerçek URL kullanılıyor
+                    };
+                    channelList.appendChild(listItem);
+                });
             });
 
         const video = document.getElementById('my-video');
@@ -287,16 +67,13 @@
             }
 
             if (Hls.isSupported()) {
-                hls = new Hls({
-                    liveSyncDurationCount: 1,
-                });
+                hls = new Hls();
                 hls.loadSource(src);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function () {
                     video.play();
                     playPauseBtn.innerHTML = '⏸️';
                     inVideoTelegram.style.display = 'block';
-                    video.currentTime = video.duration - 1;
                 });
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
                 video.src = src;
@@ -304,7 +81,6 @@
                     video.play();
                     playPauseBtn.innerHTML = '⏸️';
                     inVideoTelegram.style.display = 'block';
-                    video.currentTime = video.duration - 1;
                 });
             }
         }
@@ -337,15 +113,6 @@
                 document.exitFullscreen();
             }
         }
-
-        // Tam ekran modunda ışıkları gizle
-        document.addEventListener('fullscreenchange', () => {
-            if (document.fullscreenElement) {
-                document.body.style.background = 'black'; // Tam ekran arka plan rengi
-            } else {
-                document.body.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1))'; // Normal arka plan rengi
-            }
-        });
     </script>
 </body>
 </html>
