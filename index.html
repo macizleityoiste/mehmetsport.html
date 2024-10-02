@@ -274,17 +274,16 @@
     </div>
 </div>
 
-<div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
+    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
 
-<script>
-// Ziyaret sayısını almak için counter.php'yi çağır
-fetch('counter.php')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('visit-count').innerText = data;
-    });
-</script>
-
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        // Ziyaret sayısını almak için counter.php'yi çağır
+        fetch('counter.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('visit-count').innerText = data;
+            });
 
         const video = document.getElementById('my-video');
         const playPauseBtn = document.getElementById('play-pause');
