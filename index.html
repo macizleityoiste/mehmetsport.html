@@ -40,15 +40,18 @@
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             margin-bottom: 20px;
-            position: relative; /* Watermark için konumlandırma */
+            position: relative;
         }
 
         .watermark {
             position: absolute;
-            bottom: 10px; /* Aşağıda konumlandırma */
-            right: 10px; /* Sağda konumlandırma */
-            opacity: 0.7; /* Opaklık */
-            pointer-events: none; /* Tıklanabilirliği devre dışı bırak */
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.7;
+            pointer-events: none;
+            width: 100px; /* PNG boyutunu ayarla */
+            height: auto; /* Orantılı olarak ayarla */
+            display: none; /* Başlangıçta gizle */
         }
 
         .video-controls {
@@ -183,8 +186,12 @@
         }
 
         :fullscreen #my-video {
-            border: none; /* Tam ekran modunda kenarlık kaldır */
+            border: none;
             box-shadow: none;
+        }
+
+        :fullscreen .watermark {
+            display: block; /* Tam ekranda görünür hale getir */
         }
     </style>
 </head>
