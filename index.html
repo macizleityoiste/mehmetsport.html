@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: 'Roboto', sans-serif;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1));
+            background: black; /* Arka plan siyah yapıldı */
             color: #fff;
             display: flex;
             flex-direction: column;
@@ -45,7 +45,7 @@
 
         .watermark {
             position: absolute;
-            bottom: 10px;
+            top: 10px; /* Tam ekran modunda sağ üst köşeye yerleştirildi */
             right: 10px;
             opacity: 0.7;
             pointer-events: none;
@@ -200,7 +200,7 @@
     
     <div style="position: relative;">
         <video id="my-video" controls></video>
-        <img src="https://i.postimg.cc/3wVjkQTN/EZELV-PTV.png" alt="Watermark" class="watermark" id="watermark">
+        <img src="https://i.postimg.cc/qvNNYyqh/static.png" alt="Watermark" class="watermark" id="watermark">
     </div>
     
     <div class="in-video-telegram" id="in-video-telegram">📱 t.me/MehmetSports</div>
@@ -326,7 +326,7 @@
             if (document.fullscreenElement) {
                 document.body.style.background = 'black'; // Tam ekran arka plan rengi
             } else {
-                document.body.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1))'; // Normal arka plan rengi
+                document.body.style.background = 'black'; // Normal arka plan rengi
             }
         });
     </script>
