@@ -17,8 +17,7 @@
             justify-content: flex-start;
             height: 100vh;
             text-align: center;
-            overflow: auto;
-            padding: 20px;
+            overflow: hidden; /* Taşmayı gizle */
         }
 
         h1 {
@@ -186,6 +185,8 @@
         }
 
         :fullscreen #my-video {
+            width: 100%;
+            height: 100%;
             border: none;
             box-shadow: none;
         }
@@ -233,7 +234,7 @@
                     <span class="channel-name">Tabii Spor - 3</span>
                     <span class="date"> - Maç Zamanı Aktif!</span>
                 </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzkzMzIxOTgyY2YyMjZhNjFiMDk2MjM=')">
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzkzMzIxOTgyY2YyMjZhM2U2OTY=')">
                     <span class="status">CANLI</span>
                     <span class="channel-name">Tabii Spor - 4</span>
                     <span class="date"> - Maç Zamanı Aktif!</span>
