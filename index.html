@@ -18,8 +18,7 @@
             justify-content: flex-start;
             height: 100vh;
             text-align: center;
-            overflow: auto;
-            padding: 20px;
+            overflow: hidden; /* Değiştirildi */
         }
 
         h1 {
@@ -34,14 +33,14 @@
             right: 10px;
             opacity: 0.7;
             pointer-events: none;
-            width: 100px;
+            width: 100px; /* Genişliği ayarlayın */
             height: auto;
-            display: none;
         }
 
         .video-container {
             position: relative;
-            width: 80%;
+            width: 100%; /* Tam genişlik */
+            height: 100%; /* Tam yükseklik */
             max-width: 700px;
             margin-bottom: 20px;
         }
@@ -142,7 +141,7 @@
             <ul class="channel-list">
                 <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzEwOTE0MDM5MTI1NTk2NWNlM2NiMDc=')">E4xen 1 - FEED</li>
                 <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzEyMDQyMDA4MDE2OTFlMDg5Nzk2YmE=')">E4xen 1 - Yedek</li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzY3MzAzMzcwNTQwZDc3MjNlMjhiNDQ=')">E4xen 2 - HD</li>
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzY3MzAzMzcwNTQwZDc5NmJhZWEyOGE=')">E4xen 2 - Yedek</li>
                 <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzU0MTdmOTM1ZTRlZDFmYjY1M2U0YzM=')">E4xen 3 - Yedek</li>
             </ul>
         </div>
@@ -167,6 +166,11 @@
                 watermark.style.display = 'none';
             }
         });
+
+        // Sayfa yüklendiğinde watermark'ı gizle
+        window.onload = function() {
+            watermark.style.display = 'none';
+        };
     </script>
 </body>
 </html>
