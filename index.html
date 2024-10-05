@@ -36,10 +36,19 @@
         #my-video {
             width: 80%;
             max-width: 700px;
-            border: none; /* Çerçeve rengi kaldırıldı */
+            border: none;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             margin-bottom: 20px;
+            position: relative; /* Watermark için konumlandırma */
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 10px; /* Aşağıda konumlandırma */
+            right: 10px; /* Sağda konumlandırma */
+            opacity: 0.7; /* Opaklık */
+            pointer-events: none; /* Tıklanabilirliği devre dışı bırak */
         }
 
         .video-controls {
@@ -182,127 +191,49 @@
 <body>
     <h1>mehmet12ws</h1>
     
-    <video id="my-video" controls></video>
+    <div style="position: relative;">
+        <video id="my-video" controls></video>
+        <img src="https://i.postimg.cc/qvNNYyqh/static.png" alt="Watermark" class="watermark">
+    </div>
+    
     <div class="in-video-telegram" id="in-video-telegram">📱 t.me/MehmetSports</div>
     
     <div class="video-controls">
         <button class="control-button" id="play-pause" onclick="togglePlay()">▶️</button>
         <button class="control-button" id="mute" onclick="toggleMute()">🔊</button>
-        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🔁</button>
+        <button class="control-button" id="fullscreen" onclick="toggleFullscreen()">🌐</button>
         <input type="range" id="volume" min="0" max="1" step="0.1" value="1" onchange="setVolume(this.value)" />
     </div>
 
     <a href="https://t.me/MehmetSports" class="telegram-link" target="_blank">📱 Güncel Link İçin Telegramımıza Katılın</a>
 
-
-    
-    
     <div class="flex-row">
-    <div class="sub-channel-container">
-        <h2>Tabii Spor</h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzA2OTEzMTY2ZWY3ZjQ4YzE5YmY=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">Tabii Spor - 1</span>
-                <span class="date"> - Maç Zamanı Aktif!</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI1NDY4NTc3MDgxNTkxZjYzNzlhZTA=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">Tabii Spor - 2</span>
-                <span class="date"> - Maç Zamanı Aktif!</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0ODk0MzA3NTQ0YWY3ODQwYmM1NWU=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">Tabii Spor - 3</span>
-                <span class="date"> - Maç Zamanı Aktif!</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzkzMzIxOTgyY2YyMjVjNTM4MjI=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">Tabii Spor - 4</span>
-                <span class="date"> - Maç Zamanı Aktif!</span>
-            </li>
-        </ul>
+        <div class="sub-channel-container">
+            <h2>Tabii Spor</h2>
+            <ul class="channel-list">
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzA2OTEzMTY2ZWY3ZjQ4YzE5YmY=')">
+                    <span class="status">CANLI</span>
+                    <span class="channel-name">Tabii Spor - 1</span>
+                    <span class="date"> - Maç Zamanı Aktif!</span>
+                </li>
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI1NDY4NTc3MDgxNTkxZjYzNzlhZTA=')">
+                    <span class="status">CANLI</span>
+                    <span class="channel-name">Tabii Spor - 2</span>
+                    <span class="date"> - Maç Zamanı Aktif!</span>
+                </li>
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0ODk0MzA3NTQ0YWY3ODQwYmM1NWU=')">
+                    <span class="status">CANLI</span>
+                    <span class="channel-name">Tabii Spor - 3</span>
+                    <span class="date"> - Maç Zamanı Aktif!</span>
+                </li>
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzkzMzIxOTgyY2YyMjVjNTM4MjI=')">
+                    <span class="status">CANLI</span>
+                    <span class="channel-name">Tabii Spor - 4</span>
+                    <span class="date"> - Maç Zamanı Aktif!</span>
+                </li>
+            </ul>
+        </div>
     </div>
-
-    <div class="sub-channel-container">
-        <h2>BeinSports </h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports1 - Yedek Yayın 1</span>
-                <span class="date">7/24</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzIxMTM0NjIzOTg0M2RkZWRlOGZhYmM=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports1 - Yedek Yayın 2</span>
-                <span class="date">7/24</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI0MDM0MjUwMzE4NzNhNDMwMGQxZTQ=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports1 - Yedek Yayın 3</span>
-                <span class="date">7/24</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM2OTQ2NjI0NzU2NTVmZmNiYTZiNDc=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports 2 - Yedek Yayın 1</span>
-                <span class="date">7/24</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM0MTAxNjc1NjBmZDdiMmY0ZjQ2YmI=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports 3 - Yedek Yayın 1</span>
-                <span class="date">7/24</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE2MTk1MzQ2M2VhMWU4YmFmYmFkY2E=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports 4 - Yedek Yayın 1</span>
-                <span class="date">7/24</span>
-            </li>
-        </ul>
-    </div>
-
-    <div class="sub-channel-container">
-    <h2>E4xen</h2>
-    <ul class="channel-list">
-        <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzEwOTE0MDM5MTI1NTk2NWNlM2NiMDc=')">
-            <span class="status">CANLI</span>
-            <span class="channel-name">E4xen  1 - FEED</span>
-            <span class="date">7/24</span>
-        </li>
-        <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzEyMDQyMDA4MDE2OTFlMDg5Nzk2YmE=')">
-            <span class="status">CANLI</span>
-            <span class="channel-name">E4xen 1 - Yedek</span>
-            <span class="date">7/24</span>
-        </li>
-        <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM2NzMwMzcwNTQwZDc3MjNlMjhiNDQ=')">
-            <span class="status">CANLI</span>
-            <span class="channel-name">E4xen 2 - HD</span>
-            <span class="date">7/24</span>
-        </li>
-        <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM2NzMwMzcwNTQwZDc3MjNlMjhiNDQ=')">
-            <span class="status">CANLI</span>
-            <span class="channel-name">E4xen 2 - UHD</span>
-            <span class="date">7/24</span>
-        </li>
-    </ul>
-</div>
-
-       
-       <div class="sub-channel-container">
-        <h2>S-Sport</h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzkzNjkwODI3NDlmNmE4NmY4NTBjMQ==')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">S-Sport - Yedek Yayın 1</span>
-                <span class="date">7/24</span>
-            </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzkzNjkwODI3NDlmNmE4NmY4NTBjMQ==')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">S-Sport 2 - Yedek Yayın 1</span>
-                <span class="date">7/24</span>                
-            </li>
-        </ul>
-    </div>
-</div>
 
     <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
 
