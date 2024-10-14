@@ -36,7 +36,7 @@
         #my-video {
             width: 80%;
             max-width: 700px;
-            border: none; /* Çerçeve rengi kaldırıldı */
+            border: none;
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             margin-bottom: 20px;
@@ -84,7 +84,7 @@
             color: #fff;
         }
 
-.in-video-telegram {
+        .in-video-telegram {
             position: fixed;
             bottom: 10px;
             left: 10px;
@@ -95,6 +95,7 @@
             color: #61dafb;
             display: none;
         }
+
         .channel-container {
             display: flex;
             flex-direction: column;
@@ -180,7 +181,6 @@
 </head>
 <body>
     <h1>Plus Tayfaya Özel Yapılmıştır!</h1>
-
     
     <video id="my-video" controls></video>
     <div class="in-video-telegram" id="in-video-telegram">📱 t.me/plustahmin</div>
@@ -192,54 +192,39 @@
         <input type="range" id="volume" min="0" max="1" step="0.1" value="1" onchange="setVolume(this.value)" />
     </div>
 
-
-
-    
-    
     <div class="flex-row">
-    <div class="sub-channel-container">
-        <h2>İzlanda - Türkiye</h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI2OTMyOTkwMTMyYWYyMWU0NzE4OWM=')">
-                <span class="status">Tıkla İzle</span>
-                <span class="channel-name"></span>
-                <span class="date"></span>
-            </li>
-        </ul>
+        <div class="sub-channel-container">
+            <h2>İzlanda - Türkiye</h2>
+            <ul class="channel-list">
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI2OTMyOTkwMTMyYWYyMWU0NzE4OWM=')">
+                    <span class="status">Tıkla İzle</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sub-channel-container">
+            <h2>Galler - Karadağ</h2>
+            <ul class="channel-list">
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzEwOTE0MDM5MTI1NTk2NWNlM2NiMDc=')">
+                    <span class="status">Tıkla İzle</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sub-channel-container">
+            <h2>Ukrayna - Çek Cumhuriyeti</h2>
+            <ul class="channel-list">
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzQwMzYwNDYyMTkzM2RkNDdkN2U5YTE=')">
+                    <span class="status">Tıkla İzle</span>
+                </li>
+            </ul>
+        </div>
     </div>
 
-
-    <div class="sub-channel-container">
-    <h2>Galler-Karadağ</h2>
-    <ul class="channel-list">
-        <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzEwOTE0MDM5MTI1NTk2NWNlM2NiMDc=')">
-            <span class="status">Tıkla İzle</span>
-            <span class="channel-name"></span>
-            <span class="date"></span>
-        </li>
-        </li>
-    </ul>
-</div>
-
-       
-       <div class="sub-channel-container">
-        <h2>Ukranya - Çek Cumhuririyeti</h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzQwMzYwNDYyMTkzM2RkNDdkN2U5YTE=')">
-                <span class="status">Tıkla İzle</span>
-                <span class="channel-name"></span>
-                <span class="date"></span>
-            </li>
-
-        </ul>
-    </div>
-</div>
-
-    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
+    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span></div>
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Ziyaret sayısını almak için counter.php'yi çağır
         fetch('counter.php')
             .then(response => response.text())
             .then(data => {
@@ -249,9 +234,7 @@
         const video = document.getElementById('my-video');
         const playPauseBtn = document.getElementById('play-pause');
         const muteBtn = document.getElementById('mute');
-        const fullscreenBtn = document.getElementById('fullscreen');
         const inVideoTelegram = document.getElementById('in-video-telegram');
-
         let hls;
 
         function changeChannel(src) {
@@ -260,9 +243,7 @@
             }
 
             if (Hls.isSupported()) {
-                hls = new Hls({
-                    liveSyncDurationCount: 1,
-                });
+                hls = new Hls({ liveSyncDurationCount: 1 });
                 hls.loadSource(src);
                 hls.attachMedia(video);
                 hls.on(Hls.Events.MANIFEST_PARSED, function () {
@@ -311,12 +292,11 @@
             }
         }
 
-        // Tam ekran modunda ışıkları gizle
         document.addEventListener('fullscreenchange', () => {
             if (document.fullscreenElement) {
-                document.body.style.background = 'black'; // Tam ekran arka plan rengi
+                document.body.style.background = 'black';
             } else {
-                document.body.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1))'; // Normal arka plan rengi
+                document.body.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1))';
             }
         });
     </script>
