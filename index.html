@@ -338,7 +338,8 @@
 
             if (Hls.isSupported()) {
                 hls = new Hls({
-                    liveSyncDurationCount: 1,
+                    liveSyncDurationCount: 3, // Bu değer genellikle 3-4 saniyelik bir gecikmeye karşılık gelir
+                    liveMaxLatencyDurationCount: 5, // Maksimum gecikme süresi 5 saniye olarak ayarlandı
                 });
                 hls.loadSource(src);
                 hls.attachMedia(video);
