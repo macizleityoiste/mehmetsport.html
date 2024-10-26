@@ -331,33 +331,33 @@
 
         let hls;
 
-        function changeChannel(src) {
-            if (hls) {
-                hls.destroy();
-            }
+function changeChannel(src) {
+    if (hls) {
+        hls.destroy();
+    }
 
-            if (Hls.isSupported()) {
-                hls = new Hls({
-                    liveSyncDurationCount: 1,
-                });
-                hls.loadSource(src);
-                hls.attachMedia(video);
-                hls.on(Hls.Events.MANIFEST_PARSED, function () {
-                    video.play();
-                    playPauseBtn.innerHTML = '⏸️';
-                    inVideoTelegram.style.display = 'block';
-                    video.currentTime = video.duration - 1;
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = src;
-                video.addEventListener('loadedmetadata', function () {
-                    video.play();
-                    playPauseBtn.innerHTML = '⏸️';
-                    inVideoTelegram.style.display = 'block';
-                    video.currentTime = video.duration - 1;
-                });
-            }
-        }
+    if (Hls.isSupported()) {
+        hls = new Hls({
+            liveSyncDurationCount: 1,
+        });
+        hls.loadSource(src);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play();
+            playPauseBtn.innerHTML = '⏸️';
+            inVideoTelegram.style.display = 'block';
+            // video.currentTime = video.duration - 1; // Bu satırı kaldırdık
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = src;
+        video.addEventListener('loadedmetadata', function () {
+            video.play();
+            playPauseBtn.innerHTML = '⏸️';
+            inVideoTelegram.style.display = 'block';
+            // video.currentTime = video.duration - 1; // Bu satırı kaldırdık
+        });
+    }
+}
 
         function togglePlay() {
             if (video.paused) {
