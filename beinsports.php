@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json');
 
-// Örnek BeIN Sports kanal verileri
 $channels = [
     [
         "name" => "BeIN Sports 1",
