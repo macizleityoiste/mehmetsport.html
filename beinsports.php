@@ -16,7 +16,7 @@ $channels = [
         'status' => 'CANLI',
         'date' => '7/24'
     ],
-    // Diğer kanalları buraya ekleyebilirsin
+   
 ];
 
 echo json_encode($channels);
