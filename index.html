@@ -336,16 +336,28 @@
                 hls.destroy();
             }
 
-if (Hls.isSupported()) {
-    hls = new Hls({
-        liveSyncDurationCount: 1,
-    });
-    hls.loadSource(src);
-    hls.attachMedia(video);
-} else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-    video.src = src;
-}
-
+            if (Hls.isSupported()) {
+                hls = new Hls({
+                    liveSyncDurationCount: 1,
+                });
+                hls.loadSource(src);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                    playPauseBtn.innerHTML = '⏸️';
+                    inVideoTelegram.style.display = 'block';
+                    video.currentTime = video.duration - 1;
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+                video.addEventListener('loadedmetadata', function () {
+                    video.play();
+                    playPauseBtn.innerHTML = '⏸️';
+                    inVideoTelegram.style.display = 'block';
+                    video.currentTime = video.duration - 1;
+                });
+            }
+        }
 
         function togglePlay() {
             if (video.paused) {
