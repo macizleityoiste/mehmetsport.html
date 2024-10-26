@@ -36,7 +36,7 @@
         #my-video {
             width: 80%;
             max-width: 700px;
-            border: none;
+            border: none; /* Çerçeve rengi kaldırıldı */
             border-radius: 15px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
             margin-bottom: 20px;
@@ -84,7 +84,7 @@
             color: #fff;
         }
 
-        .in-video-telegram {
+.in-video-telegram {
             position: fixed;
             bottom: 10px;
             left: 10px;
@@ -95,7 +95,6 @@
             color: #61dafb;
             display: none;
         }
-        
         .channel-container {
             display: flex;
             flex-direction: column;
@@ -174,7 +173,7 @@
         }
 
         :fullscreen #my-video {
-            border: none;
+            border: none; /* Tam ekran modunda kenarlık kaldır */
             box-shadow: none;
         }
     </style>
@@ -194,121 +193,100 @@
 
     <a href="https://t.me/MehmetSports" class="telegram-link" target="_blank">📱 Güncel Link İçin Telegramımıza Katılın</a>
 
-    <div class="channel-container">
-        <h2>Günün Maçı</h2>
-        <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI2OTMyOTkwMTMyYWYyMWU0NzE4OWM=')">
-                <span class="status">CANLI</span>
-                <span class="channel-name">İzlanda-Türkiye</span>
-                <span class="date">90 Dakika</span>
-            </li>
-        </ul>
-    </div>
+<li class="channel-item" onclick="changeChannel('proxy.php')">
+    <span class="status">CANLI</span>
+    <span class="channel-name">İzlanda-Türkiye</span>
+    <span class="date">90 Dakika</span>
+</li>
+
     
-    <div class="flex-row">
-        <div class="sub-channel-container">
-            <h2>Tabii Spor</h2>
-            <ul class="channel-list">
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzA2OTEzMTY2ZWY3ZjQ4YzE5YmY=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">Tabii Spor - 1</span>
-                    <span class="date"> - Maç Zamanı Aktif!</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI1NDY4NTc3MDgxNTkxZjYzNzlhZTA=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">Tabii Spor - 2</span>
-                    <span class="date"> - Maç Zamanı Aktif!</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0ODk0MzA3NTQ0YWY3ODQwYmM1NWU=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">Tabii Spor - 3</span>
-                    <span class="date"> - Maç Zamanı Aktif!</span>
-                </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE1OTc4NjE2NDI0ZDJkMTFlMjU4YmY=')">
-                    <span class="status">CANLI</span>
-                    <span class="channel-name">Tabii Spor - 4</span>
-                    <span class="date"> - Maç Zamanı Aktif!</span>
-                </li>
-            </ul>
-        </div>
 
-        <div class="sub-channel-container">
-            <h2>BeIN Sports</h2>
-            <ul class="channel-list" id="bein-sports-channels">
-                <!-- BeIN Sports kanalları burada dinamik olarak yüklenecek -->
-            </ul>
-        </div>
-    </div>
+    <div class="counter">Toplam Ziyaretçi <span id="visit-count">0</span> </div>
 
-    <div class="counter">Toplam İzleyici: <span id="viewer-count">0</span></div>
-
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
-        // Video elementini al
-        const videoElement = document.getElementById('my-video');
-        videoElement.src = "https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI1OTc4NjE2NDI0ZDJkMTFlMjU4YmY=";
+        // Ziyaret sayısını almak için counter.php'yi çağır
+        fetch('counter.php')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('visit-count').innerText = data;
+            });
 
-        function changeChannel(url) {
-            videoElement.src = url;
-            videoElement.play();
-            document.getElementById('in-video-telegram').style.display = 'block';
+        const video = document.getElementById('my-video');
+        const playPauseBtn = document.getElementById('play-pause');
+        const muteBtn = document.getElementById('mute');
+        const fullscreenBtn = document.getElementById('fullscreen');
+        const inVideoTelegram = document.getElementById('in-video-telegram');
+
+        let hls;
+
+        function changeChannel(src) {
+            if (hls) {
+                hls.destroy();
+            }
+
+            if (Hls.isSupported()) {
+                hls = new Hls({
+                    liveSyncDurationCount: 1,
+                });
+                hls.loadSource(src);
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                    playPauseBtn.innerHTML = '⏸️';
+                    inVideoTelegram.style.display = 'block';
+                    video.currentTime = video.duration - 1;
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = src;
+                video.addEventListener('loadedmetadata', function () {
+                    video.play();
+                    playPauseBtn.innerHTML = '⏸️';
+                    inVideoTelegram.style.display = 'block';
+                    video.currentTime = video.duration - 1;
+                });
+            }
         }
 
         function togglePlay() {
-            if (videoElement.paused) {
-                videoElement.play();
-                document.getElementById('play-pause').innerHTML = '⏸️';
+            if (video.paused) {
+                video.play();
+                playPauseBtn.innerHTML = '⏸️';
             } else {
-                videoElement.pause();
-                document.getElementById('play-pause').innerHTML = '▶️';
+                video.pause();
+                playPauseBtn.innerHTML = '▶️';
             }
         }
 
         function toggleMute() {
-            videoElement.muted = !videoElement.muted;
-            document.getElementById('mute').innerHTML = videoElement.muted ? '🔇' : '🔊';
-        }
-
-        function toggleFullscreen() {
-            if (videoElement.requestFullscreen) {
-                videoElement.requestFullscreen();
-            } else if (videoElement.mozRequestFullScreen) { // Firefox
-                videoElement.mozRequestFullScreen();
-            } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                videoElement.webkitRequestFullscreen();
-            } else if (videoElement.msRequestFullscreen) { // IE/Edge
-                videoElement.msRequestFullscreen();
-            }
+            video.muted = !video.muted;
+            muteBtn.innerHTML = video.muted ? '🔇' : '🔊';
         }
 
         function setVolume(value) {
-            videoElement.volume = value;
+            video.volume = value;
         }
 
-        // BeIN Sports kanallarını yükle
-        fetch('beinsports.php')
-            .then(response => response.json())
-            .then(data => {
-                const channelList = document.getElementById('bein-sports-channels');
-                data.forEach(channel => {
-                    const channelItem = document.createElement('li');
-                    channelItem.className = 'channel-item';
-                    channelItem.onclick = () => changeChannel(channel.url);
-                    channelItem.innerHTML = `
-                        <span class="status">${channel.status}</span>
-                        <span class="channel-name">${channel.name}</span>
-                        <span class="date"> - ${channel.date}</span>
-                    `;
-                    channelList.appendChild(channelItem);
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                video.requestFullscreen().catch(err => {
+                    console.error(Error attempting to enable full-screen mode: ${err.message} (${err.name}));
                 });
-            })
-            .catch(error => console.error('Error fetching BeIN Sports channels:', error));
+            } else {
+                document.exitFullscreen();
+            }
+        }
 
-        // İzleyici sayısını güncelle (örnek)
-        let viewerCount = 01;
-        setInterval(() => {
-            viewerCount++;
-            document.getElementById('viewer-count').innerText = viewerCount;
-        }, 10000);
+        // Tam ekran modunda ışıkları gizle
+        document.addEventListener('fullscreenchange', () => {
+            if (document.fullscreenElement) {
+                document.body.style.background = 'black'; // Tam ekran arka plan rengi
+            } else {
+                document.body.style.background = 'radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 1))'; // Normal arka plan rengi
+            }
+        });
     </script>
 </body>
 </html>
+
+burdaki beinsports kısmındaki yayınları bir php dosyasından çekmek istiyorum f12de yani mehmetsport.m3u8 diye gözüksün
