@@ -337,27 +337,27 @@ function changeChannel(src) {
     }
 
     if (Hls.isSupported()) {
-        hls = new Hls({
-            liveSyncDurationCount: 1,
-        });
+        hls = new Hls();
         hls.loadSource(src);
         hls.attachMedia(video);
+
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.currentTime = 0; // Video baştan başlasın
             video.play();
             playPauseBtn.innerHTML = '⏸️';
             inVideoTelegram.style.display = 'block';
-            video.currentTime = 0; // Video her değiştiğinde baştan oynat
         });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = src;
         video.addEventListener('loadedmetadata', function () {
+            video.currentTime = 0; // Video baştan başlasın
             video.play();
             playPauseBtn.innerHTML = '⏸️';
             inVideoTelegram.style.display = 'block';
-            video.currentTime = 0; // Video her değiştiğinde baştan oynat
         });
     }
 }
+
 
 
         function togglePlay() {
