@@ -95,7 +95,7 @@
             color: #61dafb;
             display: none;
         }
-
+        
         .channel-container {
             display: flex;
             flex-direction: column;
@@ -204,7 +204,7 @@
             </li>
         </ul>
     </div>
-
+    
     <div class="flex-row">
         <div class="sub-channel-container">
             <h2>Tabii Spor</h2>
@@ -224,7 +224,7 @@
                     <span class="channel-name">Tabii Spor - 3</span>
                     <span class="date"> - Maç Zamanı Aktif!</span>
                 </li>
-                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzkzMzIxMjE2YzQ4NDlhOWU2YzNh=')">
+                <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE1OTc4NjE2NDI0ZDJkMTFlMjU4YmY=')">
                     <span class="status">CANLI</span>
                     <span class="channel-name">Tabii Spor - 4</span>
                     <span class="date"> - Maç Zamanı Aktif!</span>
@@ -233,60 +233,39 @@
         </div>
 
         <div class="sub-channel-container">
-            <h2>BeinSports</h2>
-            <ul class="channel-list" id="beinsports-list">
-                <!-- PHP ile dinamik olarak yüklenecek -->
+            <h2>BeIN Sports</h2>
+            <ul class="channel-list" id="bein-sports-channels">
+                <!-- BeIN Sports kanalları burada dinamik olarak yüklenecek -->
             </ul>
         </div>
     </div>
 
-    <div class="counter" id="counter">Şu anda 0 kişi izliyor.</div>
+    <div class="counter">Toplam İzleyici: <span id="viewer-count">0</span></div>
 
     <script>
+        // Video elementini al
         const videoElement = document.getElementById('my-video');
-        let isMuted = false;
-        let isPlaying = false;
-        
+        videoElement.src = "https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI1OTc4NjE2NDI0ZDJkMTFlMjU4YmY=";
+
         function changeChannel(url) {
             videoElement.src = url;
             videoElement.play();
-            updateCounter();
-            toggleInVideoTelegram();
-        }
-
-        function toggleInVideoTelegram() {
-            const telegramDiv = document.getElementById('in-video-telegram');
-            telegramDiv.style.display = 'block';
-            setTimeout(() => {
-                telegramDiv.style.display = 'none';
-            }, 3000);
-        }
-
-        function updateCounter() {
-            const counterElement = document.getElementById('counter');
-            const currentCount = parseInt(counterElement.innerText.match(/\d+/)[0]);
-            counterElement.innerText = `Şu anda ${currentCount + 1} kişi izliyor.`;
+            document.getElementById('in-video-telegram').style.display = 'block';
         }
 
         function togglePlay() {
-            if (isPlaying) {
-                videoElement.pause();
-                document.getElementById('play-pause').innerText = '▶️';
-            } else {
+            if (videoElement.paused) {
                 videoElement.play();
-                document.getElementById('play-pause').innerText = '❚❚';
+                document.getElementById('play-pause').innerHTML = '⏸️';
+            } else {
+                videoElement.pause();
+                document.getElementById('play-pause').innerHTML = '▶️';
             }
-            isPlaying = !isPlaying;
         }
 
         function toggleMute() {
-            videoElement.muted = !isMuted;
-            document.getElementById('mute').innerText = isMuted ? '🔊' : '🔇';
-            isMuted = !isMuted;
-        }
-
-        function setVolume(value) {
-            videoElement.volume = value;
+            videoElement.muted = !videoElement.muted;
+            document.getElementById('mute').innerHTML = videoElement.muted ? '🔇' : '🔊';
         }
 
         function toggleFullscreen() {
@@ -294,30 +273,42 @@
                 videoElement.requestFullscreen();
             } else if (videoElement.mozRequestFullScreen) { // Firefox
                 videoElement.mozRequestFullScreen();
-            } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari, and Opera
+            } else if (videoElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
                 videoElement.webkitRequestFullscreen();
             } else if (videoElement.msRequestFullscreen) { // IE/Edge
                 videoElement.msRequestFullscreen();
             }
         }
 
+        function setVolume(value) {
+            videoElement.volume = value;
+        }
+
+        // BeIN Sports kanallarını yükle
         fetch('beinsports.php')
             .then(response => response.json())
             .then(data => {
-                const channelList = document.getElementById('beinsports-list');
+                const channelList = document.getElementById('bein-sports-channels');
                 data.forEach(channel => {
-                    const listItem = document.createElement('li');
-                    listItem.className = 'channel-item';
-                    listItem.onclick = () => changeChannel(channel.url);
-                    listItem.innerHTML = `
+                    const channelItem = document.createElement('li');
+                    channelItem.className = 'channel-item';
+                    channelItem.onclick = () => changeChannel(channel.url);
+                    channelItem.innerHTML = `
                         <span class="status">${channel.status}</span>
                         <span class="channel-name">${channel.name}</span>
                         <span class="date"> - ${channel.date}</span>
                     `;
-                    channelList.appendChild(listItem);
+                    channelList.appendChild(channelItem);
                 });
             })
-            .catch(error => console.error('Hata:', error));
+            .catch(error => console.error('Error fetching BeIN Sports channels:', error));
+
+        // İzleyici sayısını güncelle (örnek)
+        let viewerCount = 0;
+        setInterval(() => {
+            viewerCount++;
+            document.getElementById('viewer-count').innerText = viewerCount;
+        }, 10000);
     </script>
 </body>
 </html>
