@@ -346,7 +346,7 @@ function changeChannel(src) {
             video.play();
             playPauseBtn.innerHTML = '⏸️';
             inVideoTelegram.style.display = 'block';
-            // video.currentTime = video.duration - 1; // Bu satırı kaldırdık
+            video.currentTime = 0; // Video her değiştiğinde baştan oynat
         });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
         video.src = src;
@@ -354,10 +354,11 @@ function changeChannel(src) {
             video.play();
             playPauseBtn.innerHTML = '⏸️';
             inVideoTelegram.style.display = 'block';
-            // video.currentTime = video.duration - 1; // Bu satırı kaldırdık
+            video.currentTime = 0; // Video her değiştiğinde baştan oynat
         });
     }
 }
+
 
         function togglePlay() {
             if (video.paused) {
