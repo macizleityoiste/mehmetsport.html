@@ -193,13 +193,23 @@
 
     <a href="https://t.me/MehmetSports" class="telegram-link" target="_blank">📱 Güncel Link İçin Telegramımıza Katılın</a>
 
+      <div class="channel-container">
+        <h2>Günün Maçı</h2>
+        <ul class="channel-list">
+            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI2OTMyOTkwMTMyYWYyMWU0NzE4OWM=')">
+                <span class="status">CANLI</span>
+                <span class="channel-name">İzlanda-Türkiye</span>
+                <span class="date">90 Dakika</span>
+            </li>
+        </ul>
+    </div>
     
     
     <div class="flex-row">
     <div class="sub-channel-container">
         <h2>Tabii Spor</h2>
         <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
+            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM4MzA2OTEzMTY2ZWY3ZjQ4YzE5YmY=')">
                 <span class="status">CANLI</span>
                 <span class="channel-name">Tabii Spor - 1</span>
                 <span class="date"> - Maç Zamanı Aktif!</span>
@@ -225,19 +235,19 @@
     <div class="sub-channel-container">
         <h2>BeinSports </h2>
         <ul class="channel-list">
-            <li class="channel-item" onclick="changeChannel('https://hlssssssssssssssss.denemeyanilmakanka.workers.dev/https://fener.macbedavatv18.site/hls/bein-sports-1.m3u8')">
+            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
                 <span class="status">CANLI</span>
                 <span class="channel-name">BeinSports1 - Yedek Yayın 1</span>
                 <span class="date">Maç Zamanı Aktif</span>
             </li>
-            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzE0NTM2OTIzMTQyMzc3MWI1OTUyODk=')">
+            <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzIxMTM0NjIzOTg0M2RkZWRlOGZhYmM=')">
                 <span class="status">CANLI</span>
                 <span class="channel-name">BeinSports1 - Yedek Yayın 2</span>
                 <span class="date">7/24</span>
             </li>
             <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzI0MDM0MjUwMzE4NzNhNDMwMGQxZTQ=')">
                 <span class="status">CANLI</span>
-                <span class="channel-name">BeinSports1 - (FEED)</span>
+                <span class="channel-name">BeinSports1 - FEED</span>
                 <span class="date">7/24</span>
             </li>
             <li class="channel-item" onclick="changeChannel('https://ozweb.duckdns.org/cdn/getrok/1.m3u8?v=aHR0cHM6Ly93d3cub2hhLnRvL29oYS10di9wbGF5LzM2OTQ2NjI0NzU2NTVmZmNiYTZiNDc=')">
@@ -372,7 +382,7 @@ function changeChannel(src) {
         function toggleFullscreen() {
             if (!document.fullscreenElement) {
                 video.requestFullscreen().catch(err => {
-                    console.error(Error attempting to enable full-screen mode: ${err.message} (${err.name}));
+                    console.error(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
                 });
             } else {
                 document.exitFullscreen();
